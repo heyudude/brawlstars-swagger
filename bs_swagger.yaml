@@ -158,7 +158,11 @@ components:
         name:
           type: string
         nameColor:
-          type: string
+          type: array
+          items:
+            properties:
+              id:
+                type: integer
         icon:
           type: string
         trophies:
