@@ -44,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerDetail'
+                $ref: '#/components/schemas/Player'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -150,7 +150,39 @@ components:
         detail:
           type: string
 
-    PlayerDetail:
+    Club:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        trophies:
+          type: integer
+        requiredTrophies:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClubMember'
+ 
+    ClubMember:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        trophies:
+          type: integer
+        role:
+          type: string
+        nameColor:
+          type: string
+
+    Player:
       type: object
       properties:
         tag:
@@ -188,20 +220,20 @@ components:
         bestTimeAsBigBrawler:
           type: integer
         club:
-          $ref: '#/components/schemas/ClubBase'
+          $ref: '#/components/schemas/memberOfClub'
         brawlers:
           type: array
           items:
             $ref: '#/components/schemas/Brawler'
 
-    ClubBase:
+    MemberOfClub:
       type: object
       properties:
         tag:
           type: string
         name:
           type: string
-
+    
     Brawler:
       type: object
       properties:
