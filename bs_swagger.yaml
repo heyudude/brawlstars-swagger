@@ -88,6 +88,77 @@ paths:
           $ref: '#/components/responses/UnknownException'
         '503':
           $ref: '#/components/responses/InMaintenance'
+
+  '/clubs/{clubTag}':
+   get:
+      summary: Get club information
+      description: >
+        Get information about a single club by club tag. Club tags can be found either in game or by from club member lists.
+        Note that club tags start with hash character '#' and that needs to be URL-encoded properly to work in URL, so for example player tag '#2ABC' would become '%232ABC' in the URL.
+      tags:
+        - clubs
+      operationId: getClub
+      parameters:
+        - name: clubTag
+          in: path
+          description: |
+            Tag of the club to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Club'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RequestThrottled'
+        '500':
+          $ref: '#/components/responses/UnknownException'
+        '503':
+          $ref: '#/components/responses/InMaintenance'
+
+  '/clubs/{clubTag}/members':
+   get:
+      summary: Get members of a club
+      description: >
+        Get information about the mmebers in a single club by club tag. Club tags can be found either in game or by from club member lists.
+        Note that club tags start with hash character '#' and that needs to be URL-encoded properly to work in URL, so for example player tag '#2ABC' would become '%232ABC' in the URL.
+      tags:
+        - clubsmembers
+      operationId: getClubMembers
+      parameters:
+        - name: clubTag
+          in: path
+          description: |
+            Tag of the club to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClubMemberList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RequestThrottled'
+        '500':
+          $ref: '#/components/responses/UnknownException'
+        '503':
+          $ref: '#/components/responses/InMaintenance'
+
 security:
   - JWT: []
 components:
@@ -175,12 +246,22 @@ components:
           type: string
         name:
           type: string
-        trophies:
-          type: integer
-        role:
-          type: string
         nameColor:
           type: string
+        role:
+          type: string
+        trophies:
+          type: integer
+
+    ClubMemberList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClubMember'
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
 
     Player:
       type: object
@@ -353,3 +434,14 @@ components:
           type: integer
         trophies:
           type: integer
+
+    SearchPaging:
+      type: object
+      properties:
+        cursors:
+          type: object
+          properties:
+            after:
+              type: string
+            before:
+              type: string
