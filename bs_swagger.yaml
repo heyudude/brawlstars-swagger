@@ -1,7 +1,5 @@
 openapi: 3.0.0
-servers:
-  - url: 'https://api.brawlstars.com/v1'
-info:
+info: 
   description: >-
     Unofficial Swagger definition for the official Brawl Stars API
   version: 1.0.0
@@ -33,8 +31,7 @@ paths:
       parameters:
         - name: playerTag
           in: path
-          description: |
-            Tag of the player to retrieve.
+          description: Tag of the player to retrieve.
           required: true
           schema:
             type: string
@@ -159,9 +156,26 @@ paths:
         '503':
           $ref: '#/components/responses/InMaintenance'
 
+servers:
+  - url: 'https://api.brawlstars.com/v1'
 security:
-  - JWT: []
-components:
+  #- JWT: []
+  - bearerAuth: []
+components:         
+  securitySchemes:
+    #JWT:
+    #  type: apiKey
+    #  description: JSON Web Token used as an API key
+    #  name: authorization
+    #  in: header
+    bearerAuth:
+      type: apiKey
+      description: JWT authentication needed
+      scheme: bearer
+      bearerFormat: JWT
+      name: authorization
+      in: header
+
   responses:
     BadRequest:
       description: Client provided incorrect parameters for the request.
@@ -203,13 +217,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  securitySchemes:
-    JWT:
-      type: apiKey
-      description: JSON Web Token used as an API key
-      name: authorization
-      in: header
-
+ 
   schemas:
     Error:
       type: object
@@ -260,8 +268,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClubMember'
-        paging:
-          $ref: '#/components/schemas/SearchPaging'
 
     Player:
       type: object
@@ -301,7 +307,7 @@ components:
         bestTimeAsBigBrawler:
           type: integer
         club:
-          $ref: '#/components/schemas/memberOfClub'
+          $ref: '#/components/schemas/MemberOfClub'
         brawlers:
           type: array
           items:
@@ -369,9 +375,9 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/Battle"
+            $ref: "#/components/schemas/BattleList"
 
-    Battle:
+    BattleList:
       type: object
       properties:
         battleTime:
@@ -379,13 +385,13 @@ components:
         event:
           type: array
           items:
-            $ref: "#/components/schemas/Events"
+            $ref: "#/components/schemas/Event"
         battle:
           type: array
           items:
-            $ref: "#/components/schemas/Battles"
+            $ref: "#/components/schemas/Battle"
             
-    Events:
+    Event:
       type: object
       properties:
         id:
@@ -395,7 +401,7 @@ components:
         map:
           type: string
 
-    Battles:
+    Battle:
       type: object
       properties:
         mode:
@@ -409,9 +415,9 @@ components:
         players:
           type: array
           items:
-            $ref: "#/components/schemas/battlePlayers"
+            $ref: "#/components/schemas/BattleLogTeam"
 
-    battlePlayers:
+    BattleLogTeam:
       type: object
       properties:
         tag:
@@ -421,9 +427,9 @@ components:
         brawler:
           type: array
           items:
-            $ref: "#/components/schemas/battleBrawlers"
+            $ref: "#/components/schemas/BattleLogBrawler"
 
-    battleBrawlers:
+    BattleLogBrawler:
       type: object
       properties:
         id:
@@ -435,13 +441,4 @@ components:
         trophies:
           type: integer
 
-    SearchPaging:
-      type: object
-      properties:
-        cursors:
-          type: object
-          properties:
-            after:
-              type: string
-            before:
-              type: string
+#EOF
