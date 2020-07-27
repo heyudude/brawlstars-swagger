@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info: 
   description: >-
     Unofficial Swagger definition for the official Brawl Stars API
@@ -159,20 +159,13 @@ paths:
 servers:
   - url: 'https://api.brawlstars.com/v1'
 security:
-  #- JWT: []
-  - bearerAuth: []
+  - JWTAuth: []
+
 components:         
   securitySchemes:
-    #JWT:
-    #  type: apiKey
-    #  description: JSON Web Token used as an API key
-    #  name: authorization
-    #  in: header
-    bearerAuth:
+    JWTAuth:
       type: apiKey
-      description: JWT authentication needed
-      scheme: bearer
-      bearerFormat: JWT
+      description: JSON Web Token used as an API key
       name: authorization
       in: header
 
