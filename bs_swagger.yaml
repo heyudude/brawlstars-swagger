@@ -3,6 +3,9 @@ info:
   description: >-
     Unofficial Swagger definition for the official Brawl Stars API
   version: 1.0.0
+  contact:
+    name: "HeyUDude"
+    url: "https://github.com/heyudude/pybrawl"
   title: Brawl Stars API
   termsOfService: http://supercell.com/en/terms-of-service/
   license:
@@ -157,19 +160,27 @@ paths:
           $ref: '#/components/responses/InMaintenance'
 
 servers:
-  - url: 'https://api.brawlstars.com/v1'
-security:
-  - bearerAuth: []
+  - url: 'https://api.brawlstars.com/{basePath}'
+    description: 'Supercell API server'
+    variables:
+      basePath:
+        default: v1
 
-components:         
+security:
+  #- bearerAuth: []
+  - JWT: []
+
+components: # TODO: check bearer or jwt or... line 556 in api_client.py
   securitySchemes:
-    bearerAuth:
+    # bearerAuth:
+    #   type: http
+    #   scheme: bearer
+    #   bearerFormat: JWT 
+    JWT:
       type: apiKey
-      description: JSON Web Token used as an API key
-      scheme: bearer
-      bearerFormat: JWT
       in: header
-      name: authorisation
+      description: JSON Web Token used as an API key
+      name: authorization
 
   responses:
     BadRequest:
