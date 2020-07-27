@@ -159,15 +159,17 @@ paths:
 servers:
   - url: 'https://api.brawlstars.com/v1'
 security:
-  - JWTAuth: []
+  - bearerAuth: []
 
 components:         
   securitySchemes:
-    JWTAuth:
+    bearerAuth:
       type: apiKey
       description: JSON Web Token used as an API key
-      name: authorization
+      scheme: bearer
+      bearerFormat: JWT
       in: header
+      name: authorisation
 
   responses:
     BadRequest:
