@@ -167,20 +167,20 @@ servers:
         default: v1
 
 security:
-  #- bearerAuth: []
   - JWT: []
 
 components: # TODO: check bearer or jwt or... line 556 in api_client.py
   securitySchemes:
-    # bearerAuth:
-    #   type: http
-    #   scheme: bearer
-    #   bearerFormat: JWT 
     JWT:
-      type: apiKey
-      in: header
-      description: JSON Web Token used as an API key
-      name: authorization
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+
+    #JWT:
+    #  type: apiKey
+    #  in: header
+    #  description: JSON Web Token used as an API key
+    #  name: authorization
 
   responses:
     BadRequest:
