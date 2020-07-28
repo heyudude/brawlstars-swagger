@@ -260,12 +260,12 @@ components: # TODO: check bearer or jwt or... line 556 in api_client.py
           type: string
         name:
           type: string
-        nameColor:
-          type: string
-        role:
-          type: string
         trophies:
           type: integer
+        role:
+          type: string
+        nameColor:
+          type: string
 
     ClubMemberList:
       type: object
