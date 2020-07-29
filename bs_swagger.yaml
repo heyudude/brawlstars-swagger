@@ -131,7 +131,7 @@ paths:
         Get information about the mmebers in a single club by club tag. Club tags can be found either in game or by from club member lists.
         Note that club tags start with hash character '#' and that needs to be URL-encoded properly to work in URL, so for example player tag '#2ABC' would become '%232ABC' in the URL.
       tags:
-        - clubsmembers
+        - clubs
       operationId: getClubMembers
       parameters:
         - name: clubTag
@@ -141,6 +141,26 @@ paths:
           required: true
           schema:
             type: string
+        - name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: >
+            Return only items that occur after this marker. After marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+        - name: before
+          in: query
+          description: >
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
       responses:
         '200':
           description: Success
@@ -169,7 +189,7 @@ servers:
 security:
   - JWT: []
 
-components: # TODO: check bearer or jwt or... line 556 in api_client.py
+components:
   securitySchemes:
     JWT:
         type: http
@@ -244,11 +264,13 @@ components: # TODO: check bearer or jwt or... line 556 in api_client.py
           type: string
         description:
           type: string
+        type:
+          type: string
         trophies:
           type: integer
         requiredTrophies:
           type: integer
-        memberList:
+        members:
           type: array
           items:
             $ref: '#/components/schemas/ClubMember'
@@ -260,6 +282,10 @@ components: # TODO: check bearer or jwt or... line 556 in api_client.py
           type: string
         name:
           type: string
+        # expLevel: TODO not defined in BS API: how to get these
+        #   type: integer
+        # expPoints:
+        #   type: integer
         trophies:
           type: integer
         role:
@@ -274,9 +300,8 @@ components: # TODO: check bearer or jwt or... line 556 in api_client.py
           type: array
           items:
             $ref: '#/components/schemas/ClubMember'
-        # TODO
-        # paging:
-        #   $ref: '#/components/schemas/SearchPaging'
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
 
     Player:
       type: object
@@ -450,14 +475,14 @@ components: # TODO: check bearer or jwt or... line 556 in api_client.py
         trophies:
           type: integer
 
-    # SearchPaging:
-    #   type: object
-    #   properties:
-    #     cursors:
-    #       type: object
-    #       properties:
-    #         after:
-    #           type: string
-    #         before:
-    #           type: string
+    SearchPaging:
+      type: object
+      properties:
+        cursors:
+          type: object
+          properties:
+            after:
+              type: string
+            before:
+              type: string
 #EOF
