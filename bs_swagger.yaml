@@ -71,6 +71,26 @@ paths:
           required: true
           schema:
             type: string
+        - name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: >
+            Return only items that occur after this marker. After marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+        - name: before
+          in: query
+          description: >
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
       responses:
         '200':
           description: Success
@@ -179,6 +199,175 @@ paths:
         '503':
           $ref: '#/components/responses/InMaintenance'
 
+  '/clubs/{countryCode}/players':
+   get:
+      summary: Get player ranking for a country
+      description: >
+        Get information about the ranking of players in a single country.
+      tags:
+        - clubs
+      operationId: getRankingPlayers
+      parameters:
+        - name: countryCode
+          in: path
+          description: |
+            Country code of the country player list to retrieve.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: >
+            Return only items that occur after this marker. After marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+        - name: before
+          in: query
+          description: >
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RankingPlayerList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RequestThrottled'
+        '500':
+          $ref: '#/components/responses/UnknownException'
+        '503':
+          $ref: '#/components/responses/InMaintenance'
+
+  '/clubs/{countryCode}/clubs':
+   get:
+      summary: Get club ranking for a country
+      description: >
+        Get information about the ranking of clubs in a single country.
+      tags:
+        - clubs
+      operationId: getRankingClubs
+      parameters:
+        - name: countryCode
+          in: path
+          description: |
+            Country code of the country club list to retrieve.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: >
+            Return only items that occur after this marker. After marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+        - name: before
+          in: query
+          description: >
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RankingClubList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RequestThrottled'
+        '500':
+          $ref: '#/components/responses/UnknownException'
+        '503':
+          $ref: '#/components/responses/InMaintenance'
+
+  '/clubs/{countryCode}/brawlers/{brawlerId}':
+   get:
+      summary: Get brawler ranking for a country
+      description: >
+        Get information about the ranking of brawlers in a single country.
+      tags:
+        - clubs
+      operationId: getRankingBrawlers
+      parameters:
+        - name: countryCode
+          in: path
+          description: |
+            Country code of the country club list to retrieve.
+          required: true
+          schema:
+            type: string
+        - name: brawlerId
+          in: path
+          description: |
+            Brawler ID of the brawler rank to retrieve.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: >
+            Return only items that occur after this marker. After marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+        - name: before
+          in: query
+          description: >
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RankingBrawlerList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RequestThrottled'
+        '500':
+          $ref: '#/components/responses/UnknownException'
+        '503':
+          $ref: '#/components/responses/InMaintenance'
+  
 servers:
   - url: 'https://api.brawlstars.com/{basePath}'
     description: 'Supercell API server'
@@ -195,12 +384,6 @@ components:
         type: http
         scheme: bearer
         bearerFormat: JWT
-
-    #JWT:
-    #  type: apiKey
-    #  in: header
-    #  description: JSON Web Token used as an API key
-    #  name: authorization
 
   responses:
     BadRequest:
@@ -255,6 +438,94 @@ components:
         detail:
           type: string
 
+    Battle:
+      type: object
+      properties:
+        mode:
+          type: string
+        type:
+          type: string
+        rank:
+          type: integer
+        trophyChange:
+          type: integer
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/BattleLogTeam"
+
+    BattleLogTeam:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        brawler:
+          type: array
+          items:
+            $ref: "#/components/schemas/BattleLogBrawler"
+
+    BattleList:
+      type: object
+      properties:
+        battleTime:
+          type: string
+        event:
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+        battle:
+          type: array
+          items:
+            $ref: "#/components/schemas/Battle"
+
+    BattleLogBrawler:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        power:
+          type: integer
+        trophies:
+          type: integer
+        paging:
+          $ref: '#/components/schemas/SearchPaging'     
+    
+    Brawler:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        power:
+          type: integer
+        rank:
+          type: integer
+        trophies:
+          type: integer
+        highestTrophies:
+          type: integer
+        starPowers:
+          type: array
+          items:
+            $ref: '#/components/schemas/StarPowers'
+        gadgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Gadgets'
+
+    BrawlerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Brawler'
+
     Club:
       type: object
       properties:
@@ -282,10 +553,6 @@ components:
           type: string
         name:
           type: string
-        # expLevel: TODO not defined in BS API: how to get these
-        #   type: integer
-        # expPoints:
-        #   type: integer
         trophies:
           type: integer
         role:
@@ -300,6 +567,50 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClubMember'
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
+            
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        mode:
+          type: string
+        map:
+          type: string
+
+    Gadgets:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    MemberOfClub:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+
+    StarPowers:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    PlayerBattleLog:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BattleList"
         paging:
           $ref: '#/components/schemas/SearchPaging'
 
@@ -347,133 +658,55 @@ components:
           items:
             $ref: '#/components/schemas/Brawler'
 
-    MemberOfClub:
+    RankingPlayerList:
       type: object
       properties:
         tag:
           type: string
         name:
           type: string
-    
-    Brawler:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
+        nameColor:
           type: string
-        power:
-          type: integer
-        rank:
-          type: integer
         trophies:
           type: integer
-        highestTrophies:
-          type: integer
-        starPowers:
-          type: array
-          items:
-            $ref: '#/components/schemas/StarPowers'
-        gadgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Gadgets'
-
-    StarPowers:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-
-    Gadgets:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-
-    BrawlerList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Brawler'
-
-    PlayerBattleLog:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/BattleList"
-
-    BattleList:
-      type: object
-      properties:
-        battleTime:
-          type: string
-        event:
-          type: array
-          items:
-            $ref: "#/components/schemas/Event"
-        battle:
-          type: array
-          items:
-            $ref: "#/components/schemas/Battle"
-            
-    Event:
-      type: object
-      properties:
-        id:
-          type: integer
-        mode:
-          type: string
-        map:
-          type: string
-
-    Battle:
-      type: object
-      properties:
-        mode:
-          type: string
-        type:
-          type: string
         rank:
           type: integer
-        trophyChange:
-          type: integer
-        players:
-          type: array
-          items:
-            $ref: "#/components/schemas/BattleLogTeam"
+        club:
+          $ref: '#/components/schemas/MemberOfClub'
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
 
-    BattleLogTeam:
+    RankingClubList:
       type: object
       properties:
         tag:
           type: string
         name:
           type: string
-        brawler:
-          type: array
-          items:
-            $ref: "#/components/schemas/BattleLogBrawler"
-
-    BattleLogBrawler:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        power:
-          type: integer
         trophies:
           type: integer
+        rank:
+          type: integer
+        membercount:
+          type: integer
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
+
+    RankingBrawlerList:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        nameColor:
+          type: string
+        trophies:
+          type: integer
+        club:
+          $ref: '#/components/schemas/MemberOfClub'
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
 
     SearchPaging:
       type: object
