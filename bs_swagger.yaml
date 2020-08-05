@@ -604,16 +604,6 @@ components:
         name:
           type: string
 
-    PlayerBattleLog:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/BattleList"
-        paging:
-          $ref: '#/components/schemas/SearchPaging'
-
     Player:
       type: object
       properties:
@@ -641,7 +631,7 @@ components:
           type: integer
         isQualifiedFromChampionshipChallenge:
           type: boolean
-        3vs3Victories:
+        v3vs3Victories:
           type: integer
         soloVictories:
           type: integer
@@ -657,6 +647,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Brawler'
+
+    PlayerBattleLog:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BattleList"
+        paging:
+          $ref: '#/components/schemas/SearchPaging'
 
     RankingPlayerList:
       type: object
