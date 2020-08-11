@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files ....
 __pycache__/
 *.py[cod]
 *$py.class
@@ -6,8 +6,23 @@ __pycache__/
 # C extensions
 *.so
 
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
 # Distribution / packaging
+pyvenv.cfg
+makeb.sh
+bin/
 .Python
+.env/
+env/
 build/
 develop-eggs/
 dist/
@@ -16,15 +31,14 @@ eggs/
 .eggs/
 lib/
 lib64/
+lib64
 parts/
 sdist/
+share/
 var/
-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
-*.code-workspace
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -44,24 +58,19 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*.cover
+*,cover
 .hypothesis/
-.pytest_cache/
+venv/
+.venv/
+.python-version
+.pytest_cache
 
 # Translations
 *.mo
+*.pot
 
 # Django stuff:
 *.log
-local_settings.py
-db.sqlite3
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
 
 # Sphinx documentation
 docs/_build/
@@ -69,40 +78,5 @@ docs/_build/
 # PyBuilder
 target/
 
-# Jupyter Notebook
+#Ipython Notebook
 .ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-
-.scannerwork
-crtools-out/
-crtools/fankit/
