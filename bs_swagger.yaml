@@ -1,12 +1,12 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info: 
+  title: Brawl_Stars_API
   description: >-
     Unofficial Swagger definition for the official Brawl Stars API
-  version: 1.0.0
+  version: 0.0.3
   contact:
     name: "HeyUDude"
     url: "https://github.com/heyudude/pybrawl"
-  title: Brawl Stars API
   termsOfService: http://supercell.com/en/terms-of-service/
   license:
     name: GNU Lesser General Public License 3.0
